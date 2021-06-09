@@ -6,6 +6,6 @@ app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`App running on port ${port}.`)
 })
