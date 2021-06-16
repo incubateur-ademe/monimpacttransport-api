@@ -18,8 +18,7 @@ app.get('/', (request, response) => {
 })
 
 app.get('/beta/transportations', db.getTransportations)
-app.get('/beta/distance', db.getFootprintByDistance)
-app.get('/beta/distance/:km', db.getFootprintByDistance)
+app.get('/beta/footprints', db.getFootprints)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

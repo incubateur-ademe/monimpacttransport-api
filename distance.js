@@ -49,11 +49,13 @@ const filterFields = (transportations, fields) =>
   transportations.map((transportation) => {
     let response = {
       id: transportation.id,
-      name: transportation.name,
+      name: transportation.name.fr,
       footprint: transportation.footprint,
     }
     for (let field of fields) {
-      response[field] = transportation[field]
+      response[field] =
+        (transportation[field] && transportation[field].fr) ||
+        transportation[field]
     }
     return response
   })

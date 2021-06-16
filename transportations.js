@@ -7,35 +7,10 @@ const structureTransportations = (rows) =>
               row.id === cur.id
                 ? {
                     ...row,
-                    name: {
-                      ...row.name,
-                      [cur.labellanguage]: cur.labelvalue,
-                    },
-                    description: {
-                      ...row.description,
-                      [cur.descriptionlanguage]: cur.descriptionvalue,
-                    },
-                    emoji: {
-                      ...row.emoji,
-                      [cur.emojitype]: cur.emojivalue,
-                    },
-                    footprint:
-                      !cur.validity ||
-                      row.footprint.find(
-                        (footprintrow) =>
-                          JSON.stringify(footprintrow.validity) ===
-                          JSON.stringify(cur.validity)
-                      )
-                        ? row.footprint
-                        : [
-                            ...row.footprint,
-                            {
-                              gco2ePerKm: cur.gco2e_per_km,
-                              gco2ePerKmWithoutRadiativeForcing:
-                                cur.gco2e_per_km_without_radiative_forcing,
-                              validity: cur.validity,
-                            },
-                          ].sort(),
+                    name: setName(row, cur),
+                    description: setDescription(row, cur),
+                    emoji: setEmoji(row, cur),
+                    footprint: setFootprint(row, cur),
                   }
                 : row
             ),
@@ -45,22 +20,11 @@ const structureTransportations = (rows) =>
             {
               id: cur.id,
               source: cur.source,
-              name: { [cur.labellanguage]: cur.labelvalue },
-              emoji: {
-                [cur.emojitype]: cur.emojivalue,
-              },
-              description: {
-                [cur.descriptionlanguage]: cur.descriptionvalue,
-              },
+              name: setName({}, cur),
+              emoji: setEmoji({}, cur),
+              description: setDescription({}, cur),
               carpool: cur.carpool,
-              footprint: [
-                {
-                  gco2ePerKm: cur.gco2e_per_km,
-                  gco2ePerKmWithoutRadiativeForcing:
-                    cur.gco2e_per_km_without_radiative_forcing,
-                  validity: cur.validity,
-                },
-              ],
+              footprint: setFootprint({}, cur),
               display: {
                 min: cur.display_min,
                 max: cur.display_max,
@@ -70,6 +34,44 @@ const structureTransportations = (rows) =>
           ],
     []
   )
+
+const setName = (acc, cur) => ({
+  ...acc.name,
+  [cur.labellanguage]: cur.labelvalue,
+})
+const setEmoji = (acc, cur) => ({
+  ...acc.emoji,
+  [cur.emojitype]: cur.emojivalue,
+})
+const setDescription = (acc, cur) => ({
+  ...acc.description,
+  [cur.descriptionlanguage]: cur.descriptionvalue,
+})
+const setFootprint = (acc, cur) =>
+  acc.footprint
+    ? !cur.validity ||
+      acc.footprint.find(
+        (footprintrow) =>
+          JSON.stringify(footprintrow.validity) === JSON.stringify(cur.validity)
+      )
+      ? acc.footprint
+      : [
+          ...acc.footprint,
+          {
+            gco2ePerKm: cur.gco2e_per_km,
+            gco2ePerKmWithoutRadiativeForcing:
+              cur.gco2e_per_km_without_radiative_forcing,
+            validity: cur.validity,
+          },
+        ].sort()
+    : [
+        {
+          gco2ePerKm: cur.gco2e_per_km,
+          gco2ePerKmWithoutRadiativeForcing:
+            cur.gco2e_per_km_without_radiative_forcing,
+          validity: cur.validity,
+        },
+      ]
 
 module.exports = {
   structureTransportations,

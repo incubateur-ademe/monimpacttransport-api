@@ -56,8 +56,8 @@ const getTransportations = (request, response) => {
   })
 }
 
-const getFootprintByDistance = (request, response) => {
-  const km = parseInt(request.params.km) || 1
+const getFootprints = (request, response) => {
+  const km = request.query.km || 1
 
   const filter = request.query.filter
   const ignoreRadiativeForcing = request.query.ignoreRadiativeForcing
@@ -98,5 +98,5 @@ const getFootprintByDistance = (request, response) => {
 
 module.exports = {
   getTransportations,
-  getFootprintByDistance,
+  getFootprints,
 }
