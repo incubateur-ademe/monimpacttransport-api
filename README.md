@@ -8,7 +8,7 @@ Accessible via https://api.monimpacttransport.fr
 
 Retourne la liste des modes de transport avec leur impact calculé pour une distance (paramètre **km**) donnée.
 
-### Exemple
+### Exemples
 
     https://api.monimpacttransport.fr/beta/footprints?km=250
 
