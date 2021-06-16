@@ -14,7 +14,18 @@ app.use(
 )
 
 app.get('/', (request, response) => {
-  response.json({ info: 'Node.js, Express, and Postgres API' })
+  response.json({
+    title: 'API Mon Impact Transport',
+    description: "API alimentant l'app Mon Impact Transport",
+    repo: 'https://github.com/datagir/monimpacttransport-api',
+    documentation: 'https://github.com/datagir/monimpacttransport-api',
+    versions: [
+      {
+        title: 'beta',
+        endpoints: ['/beta/footprints', '/beta/transportations'],
+      },
+    ],
+  })
 })
 
 app.get('/beta/transportations', db.getTransportations)
