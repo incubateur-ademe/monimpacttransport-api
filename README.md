@@ -37,7 +37,7 @@ Retourne la liste des modes de transport avec leur impact calculé pour une dist
 
   Si **true** l'api ignore l'impact des trainées ([forçage radiatif](https://fr.wikipedia.org/wiki/For%C3%A7age_radiatif)) dans son calcul de l'impact de l'avion
 
-- **fields**: String[] (défaut: **id, name, footprint**)
+- **fields**: String[] (défaut: **id, name, emissions**)
 
   Détermine la liste des champs retournés par l'api.
   Valeurs possibles :
@@ -48,14 +48,14 @@ Retourne la liste des modes de transport avec leur impact calculé pour une dist
   - **emoji**
   - **description**
   - **carpool**
-  - **footprint** (toujours retourné)
+  - **emissions** (toujours retourné)
   - **display**
 
-- **sort**: String (défaut: **footprint**)
+- **sort**: String (défaut: **emissions**)
 
   Determine la propriété utilisée pour le classement.
   Valeurs possibles :
 
   - **id**
   - **name**
-  - **footprint**
+  - **emissions**
