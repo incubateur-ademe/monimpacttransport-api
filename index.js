@@ -22,14 +22,14 @@ app.get('/', (request, response) => {
     versions: [
       {
         title: 'beta',
-        endpoints: ['/beta/footprints', '/beta/transportations'],
+        endpoints: ['/beta/emissions', '/beta/transportations'],
       },
     ],
   })
 })
 
 app.get('/beta/transportations', db.getTransportations)
-app.get('/beta/footprints', db.getFootprints)
+app.get('/beta/emissions', db.getEmissions)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

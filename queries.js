@@ -56,7 +56,7 @@ const getTransportations = (request, response) => {
   })
 }
 
-const getFootprints = (request, response) => {
+const getEmissions = (request, response) => {
   const km = request.query.km || 1
 
   const filter = request.query.filter
@@ -98,5 +98,5 @@ const getFootprints = (request, response) => {
 
 module.exports = {
   getTransportations,
-  getFootprints,
+  getEmissions,
 }
