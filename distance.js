@@ -14,34 +14,34 @@ const filterTransportations = (transportations, km, filter) =>
               //Both min and max
               (transportation.display.min <= km &&
                 transportation.display.max >= km)) &&
-            transportation.footprint[0].gco2ePerKm
-          : transportation.footprint[0].gco2ePerKm
+            transportation.emissions[0].gco2ePerKm
+          : transportation.emissions[0].gco2ePerKm
       )
 
-const getFootprint = (transportations, km, ignoreRadiativeForcing) =>
+const getEmissionsForDistance = (transportations, km, ignoreRadiativeForcing) =>
   transportations.map((transportation) => {
-    const footprintObject = transportation.footprint.find(
-      (footprintrow) =>
-        !footprintrow.validity ||
-        (footprintrow.validity[0] < km && footprintrow.validity[1] > km)
+    const emissionsObject = transportation.emissions.find(
+      (emissionsrow) =>
+        !emissionsrow.validity ||
+        (emissionsrow.validity[0] < km && emissionsrow.validity[1] > km)
     )
-    const footprint = {
+    const emissions = {
       usage:
-        footprintObject && footprintObject.gco2ePerKm
-          ? footprintObject.gco2ePerKm * km
+        emissionsObject && emissionsObject.gco2ePerKm
+          ? emissionsObject.gco2ePerKm * km
           : null,
       unit: 'gco2e',
     }
     if (
-      footprintObject &&
-      footprintObject.gco2ePerKmWithoutRadiativeForcing &&
+      emissionsObject &&
+      emissionsObject.gco2ePerKmWithoutRadiativeForcing &&
       ignoreRadiativeForcing
     ) {
-      footprint.usage = footprintObject.gco2ePerKmWithoutRadiativeForcing * km
+      emissions.usage = emissionsObject.gco2ePerKmWithoutRadiativeForcing * km
     }
     return {
       ...transportation,
-      footprint,
+      emissions,
     }
   })
 
@@ -50,7 +50,7 @@ const filterFields = (transportations, fields) =>
     let response = {
       id: transportation.id,
       name: transportation.name.fr,
-      footprint: transportation.footprint,
+      emissions: transportation.emissions,
     }
     for (let field of fields) {
       response[field] =
@@ -68,13 +68,13 @@ const sortTransportations = (transportations, sort) =>
           ? a.name.fr > b.name.fr
             ? 1
             : -1
-          : a.footprint.usage === null || a.footprint.usage > b.footprint.usage
+          : a.emissions.usage === null || a.emissions.usage > b.emissions.usage
           ? 1
           : -1
       )
 module.exports = {
   filterTransportations,
-  getFootprint,
+  getEmissionsForDistance,
   filterFields,
   sortTransportations,
 }

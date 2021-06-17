@@ -2,7 +2,7 @@ const { Client } = require('pg')
 const { structureTransportations } = require('./transportations')
 const {
   filterTransportations,
-  getFootprint,
+  getEmissionsForDistance,
   filterFields,
   sortTransportations,
 } = require('./distance')
@@ -78,7 +78,7 @@ const getEmissions = (request, response) => {
     }
     const rows = sortTransportations(
       filterFields(
-        getFootprint(
+        getEmissionsForDistance(
           filterTransportations(
             structureTransportations(results.rows),
             km,

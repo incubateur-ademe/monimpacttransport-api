@@ -10,7 +10,7 @@ const structureTransportations = (rows) =>
                     name: setName(row, cur),
                     description: setDescription(row, cur),
                     emoji: setEmoji(row, cur),
-                    footprint: setFootprint(row, cur),
+                    emissions: setEmissions(row, cur),
                   }
                 : row
             ),
@@ -24,7 +24,7 @@ const structureTransportations = (rows) =>
               emoji: setEmoji({}, cur),
               description: setDescription({}, cur),
               carpool: cur.carpool,
-              footprint: setFootprint({}, cur),
+              emissions: setEmissions({}, cur),
               display: {
                 min: cur.display_min,
                 max: cur.display_max,
@@ -47,16 +47,16 @@ const setDescription = (acc, cur) => ({
   ...acc.description,
   [cur.descriptionlanguage]: cur.descriptionvalue,
 })
-const setFootprint = (acc, cur) =>
-  acc.footprint
+const setEmissions = (acc, cur) =>
+  acc.emissions
     ? !cur.validity ||
-      acc.footprint.find(
-        (footprintrow) =>
-          JSON.stringify(footprintrow.validity) === JSON.stringify(cur.validity)
+      acc.emissions.find(
+        (emissionsrow) =>
+          JSON.stringify(emissionsrow.validity) === JSON.stringify(cur.validity)
       )
-      ? acc.footprint
+      ? acc.emissions
       : [
-          ...acc.footprint,
+          ...acc.emissions,
           {
             gco2ePerKm: cur.gco2e_per_km,
             gco2ePerKmWithoutRadiativeForcing:
